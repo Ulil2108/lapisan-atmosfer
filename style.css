@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(to top, #3b83bd, #ffffff);
+}
+
+#earth {
+  margin: 20px;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  background: #f0f8ff;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.controls button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
