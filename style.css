@@ -1,27 +1,444 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background: linear-gradient(to top, #3b83bd, #ffffff);
-}
-
-#earth {
-  margin: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  border: 2px solid #333;
-  border-radius: 10px;
-  background: #f0f8ff;
 }
 
-.controls button {
-  padding: 10px 20px;
-  margin: 10px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
-.controls button:disabled {
-  background: #999;
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: start;
+}
+
+/* Visualization Section */
+.visualization {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.atmosphere-container {
+  position: relative;
+  width: 300px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+/* Atmosphere Layers */
+.atmosphere-layer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.5);
+  border-right: 3px solid rgba(255, 255, 255, 0.5);
+  border-top: 1px dashed rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 10px;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.atmosphere-layer.active {
+  opacity: 1;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.troposphere {
+  bottom: 0;
+  height: 85px;
+  background: linear-gradient(to top, rgba(135, 206, 235, 0.3), rgba(135, 206, 235, 0.1));
+}
+
+.stratosphere {
+  bottom: 85px;
+  height: 165px;
+  background: linear-gradient(to top, rgba(70, 130, 180, 0.25), rgba(70, 130, 180, 0.1));
+}
+
+.mesosphere {
+  bottom: 250px;
+  height: 175px;
+  background: linear-gradient(to top, rgba(65, 105, 225, 0.2), rgba(65, 105, 225, 0.05));
+}
+
+.thermosphere {
+  bottom: 425px;
+  height: 2125px;
+  background: linear-gradient(to top, rgba(255, 69, 0, 0.15), rgba(255, 69, 0, 0.02));
+}
+
+.exosphere {
+  bottom: 2550px;
+  height: 100px;
+  background: linear-gradient(to top, rgba(139, 0, 139, 0.1), rgba(139, 0, 139, 0.02));
+}
+
+.layer-label {
+  position: absolute;
+  left: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Earth */
+.earth {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #4a90e2, #2ecc71);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(74, 144, 226, 0.5), inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.earth img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Astronaut */
+.astronaut {
+  position: absolute;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  transition: bottom 0.5s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+.astronaut-head {
+  width: 24px;
+  height: 28px;
+  background: #f4a460;
+  border-radius: 50% 50% 50% 50%;
+  margin: 0 auto 8px;
+  position: relative;
+  border: 2px solid #d4845f;
+}
+
+.astronaut-head::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  top: 8px;
+  left: 6px;
+}
+
+.astronaut-head::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  top: 8px;
+  right: 6px;
+}
+
+.astronaut-body {
+  width: 20px;
+  height: 50px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.astronaut-belt {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: #ff6b6b;
+  top: 50%;
+  left: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.astronaut-arm {
+  position: absolute;
+  width: 6px;
+  height: 20px;
+  background: #f4a460;
+  top: 8px;
+  border-radius: 3px;
+}
+
+.left-arm {
+  left: -12px;
+  transform: rotate(-20deg);
+}
+
+.right-arm {
+  right: -12px;
+  transform: rotate(20deg);
+}
+
+.astronaut-leg {
+  position: absolute;
+  width: 6px;
+  height: 18px;
+  background: #ff6b6b;
+  bottom: -18px;
+  border-radius: 3px;
+}
+
+.left-leg {
+  left: 4px;
+}
+
+.right-leg {
+  right: 4px;
+}
+
+/* Info Panel */
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.current-layer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.current-layer h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.layer-description {
+  font-size: 1em;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.layer-details {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 2px solid #e9ecef;
+}
+
+.layer-detail {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.layer-detail.hidden {
+  display: none;
+}
+
+.layer-detail h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.layer-detail p {
+  color: #555;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.layer-detail strong {
+  color: #333;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 15px 40px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-up {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-up:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-down {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.btn-down:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+}
+
+.btn:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
+  transform: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .atmosphere-container {
+    width: 250px;
+    height: 500px;
+  }
+  
+  .earth {
+    width: 100px;
+    height: 100px;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .atmosphere-container {
+    width: 200px;
+    height: 400px;
+  }
+  
+  .earth {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .current-layer h2 {
+    font-size: 1.3em;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Scrollbar Styling */
+.layer-details::-webkit-scrollbar {
+  width: 8px;
+}
+
+.layer-details::-webkit-scrollbar-track {
+  background: #e9ecef;
+  border-radius: 10px;
+}
+
+.layer-details::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.layer-details::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
 }
