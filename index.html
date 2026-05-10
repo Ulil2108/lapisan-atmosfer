@@ -2,19 +2,113 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Lapisan Atmosfer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Pembelajaran: Lapisan Atmosfer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Media Pembelajaran: Lapisan Atmosfer</h1>
-  <div id="earth">
-    <p>👨‍🚀 Astronot berada di <span id="layer-name">Permukaan Bumi</span></p>
+  <div class="container">
+    <h1>Media Pembelajaran: Lapisan Atmosfer</h1>
+    
+    <div class="main-content">
+      <div class="visualization">
+        <!-- Lapisan Atmosfer -->
+        <div class="atmosphere-container">
+          <div class="atmosphere-layer exosphere" id="layer-exosphere">
+            <span class="layer-label">Eksosfer</span>
+          </div>
+          <div class="atmosphere-layer thermosphere" id="layer-thermosphere">
+            <span class="layer-label">Termosfer</span>
+          </div>
+          <div class="atmosphere-layer mesosphere" id="layer-mesosphere">
+            <span class="layer-label">Mesosfer</span>
+          </div>
+          <div class="atmosphere-layer stratosphere" id="layer-stratosphere">
+            <span class="layer-label">Stratosfer</span>
+          </div>
+          <div class="atmosphere-layer troposphere" id="layer-troposphere">
+            <span class="layer-label">Troposfer</span>
+          </div>
+          
+          <!-- Earth -->
+          <div class="earth">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='%234a90e2'/%3E%3Ccircle cx='100' cy='100' r='95' fill='url(%23earthGradient)' opacity='0.8'/%3E%3Cdefs%3E%3ClinearGradient id='earthGradient'%3E%3Cstop offset='0%25' style='stop-color:%234a90e2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2327ae60;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E" alt="Bumi">
+          </div>
+          
+          <!-- Astronot -->
+          <div class="astronaut" id="astronaut">
+            <div class="astronaut-head"></div>
+            <div class="astronaut-body">
+              <div class="astronaut-arm left-arm"></div>
+              <div class="astronaut-arm right-arm"></div>
+              <div class="astronaut-belt"></div>
+              <div class="astronaut-leg left-leg"></div>
+              <div class="astronaut-leg right-leg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Info Panel -->
+      <div class="info-panel">
+        <div class="current-layer">
+          <h2 id="current-layer-name">Permukaan Bumi</h2>
+          <div id="layer-info" class="layer-description">
+            <p>Anda berada di permukaan Bumi. Tekan tombol "Naik" untuk mulai menjelajahi lapisan atmosfer!</p>
+          </div>
+        </div>
+        
+        <!-- Layer Details -->
+        <div class="layer-details">
+          <div id="detail-troposphere" class="layer-detail hidden">
+            <h3>Troposfer</h3>
+            <p><strong>Ketinggian:</strong> 0 - 17 km</p>
+            <p><strong>Suhu:</strong> Menurun seiring ketinggian</p>
+            <p><strong>Karakteristik:</strong> Lapisan tempat terjadinya cuaca, mengandung 80% massa udara atmosfer. Terdapat awan, hujan, dan angin.</p>
+          </div>
+          
+          <div id="detail-stratosphere" class="layer-detail hidden">
+            <h3>Stratosfer</h3>
+            <p><strong>Ketinggian:</strong> 17 - 50 km</p>
+            <p><strong>Suhu:</strong> Meningkat seiring ketinggian</p>
+            <p><strong>Karakteristik:</strong> Mengandung lapisan ozon yang melindungi bumi dari radiasi ultraviolet matahari. Relatif tenang tanpa turbulensi.</p>
+          </div>
+          
+          <div id="detail-mesosphere" class="layer-detail hidden">
+            <h3>Mesosfer</h3>
+            <p><strong>Ketinggian:</strong> 50 - 85 km</p>
+            <p><strong>Suhu:</strong> Menurun drastis mencapai -90°C</p>
+            <p><strong>Karakteristik:</strong> Lapisan terdingin di atmosfer. Meteor memasuki lapisan ini dan terbakar menciptakan bintang jatuh.</p>
+          </div>
+          
+          <div id="detail-thermosphere" class="layer-detail hidden">
+            <h3>Termosfer</h3>
+            <p><strong>Ketinggian:</strong> 85 - 500 km</p>
+            <p><strong>Suhu:</strong> Meningkat drastis hingga ribuan derajat Celsius</p>
+            <p><strong>Karakteristik:</strong> Lapisan tempat satelit mengorbit. Suhu tinggi karena penyerapan radiasi ultraviolet ekstrem dari matahari.</p>
+          </div>
+          
+          <div id="detail-exosphere" class="layer-detail hidden">
+            <h3>Eksosfer</h3>
+            <p><strong>Ketinggian:</strong> Di atas 500 km</p>
+            <p><strong>Suhu:</strong> Sangat tinggi dan terus meningkat</p>
+            <p><strong>Karakteristik:</strong> Lapisan paling atas atmosfer. Udara sangat jarang, perlahan menyatu dengan ruang angkasa. Tempat orbitnya satelit buatan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button id="btn-down" class="btn btn-down" onclick="moveDown()" disabled>
+        <span>⬇️</span> Turun
+      </button>
+      <button id="btn-up" class="btn btn-up" onclick="moveUp()">
+        <span>⬆️</span> Naik
+      </button>
+    </div>
   </div>
-  <div id="info"></div>
-  <div class="controls">
-    <button id="down" onclick="moveDown()">Turun</button>
-    <button id="up" onclick="moveUp()">Naik</button>
-  </div>
+  
   <script src="script.js"></script>
 </body>
 </html>
